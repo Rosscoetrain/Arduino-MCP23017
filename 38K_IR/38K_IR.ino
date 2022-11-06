@@ -1,3 +1,15 @@
+/*
+   Arduino MCP23017 emulation for use with DCC-EX
+
+   Based on original work by Mike (Springlake on Discord)
+
+   Most of this is just rewritten to make it easier to read and modify
+
+   Rewrite by Ross (Rosscoe on Discord)
+
+ */
+
+
 #include <Wire.h>
 #include <FrequencyTimer2.h>
 

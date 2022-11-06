@@ -1,3 +1,14 @@
+/*
+   Arduino MCP23017 emulation for use with DCC-EX
+
+   Based on original work by Mike (Springlake on Discord)
+
+   Most of this is just rewritten to make it easier to read and modify
+
+   Rewrite by Ross (Rosscoe on Discord)   
+
+ */
+
 
 #include <Wire.h>
 #include <EEPROM.h>
@@ -11,7 +22,7 @@
 
 void setup() {
   Wire.begin(I2C_ADDRESS);                // join i2c bus with address #18
-//  digitalWrite(9,0);                    //int turn off tell host we have new data
+//  digitalWrite(9,0);                    // int turn off tell host we have new data
   Wire.onReceive(receiveEvent);           // register event toreceive data from i2c master (cmd and arg)
   Wire.onRequest(requestEvent);           // register event to send data to i2c master (irStatus )  
 
