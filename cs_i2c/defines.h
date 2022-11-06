@@ -1,4 +1,4 @@
-#define numservo 8 
+#define NUMSERVO 8
 
 // i2c address
 

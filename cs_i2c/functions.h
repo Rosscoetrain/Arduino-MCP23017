@@ -206,7 +206,7 @@ void Throw( int i)
   t_stat[i] = 1;
 
 
-  if ( i < numservo ) {
+  if ( i < NUMSERVO ) {
     if ( rpins[i] != -30 ) {         // -30is flag this servo doesnot have relay output
       digitalWrite(rpins[i], LOW);
 
@@ -231,7 +231,7 @@ void Close(int i)
   delay(dly);
   turnout[i].write(sclosed[i]);            // Set to closed
   delay(dly);
-  if ( i < numservo ) {
+  if ( i < NUMSERVO ) {
     if ( rpins[i] != -30 ) {         // -30is flag this servo doesnot have relay output
       digitalWrite(rpins[i], HIGH);
     }

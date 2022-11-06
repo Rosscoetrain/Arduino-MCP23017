@@ -1,7 +1,7 @@
 /*
    Arduino MCP23017 emulation for use with DCC-EX
 
-   Based on original work by Mike (Springlake on Discord)
+   Based on original work by Mike B (Springlake on Discord)
 
    Most of this is just rewritten to make it easier to read and modify
 
@@ -37,16 +37,16 @@ void setup() {
    
  
   // restore sclosed and sthrown from eeprom
-  // adr 0 to adr numservo =ssclosed
-  // adr numservo+1 toadr numservo+numservo =sthrown
+  // adr 0 to adr NUMSERVO =ssclosed
+  // adr NUMSERVO+1 toadr NUMSERVO+NUMSERVO =sthrown
   
   i = 0;
-  while (i < numservo) {
+  while (i < NUMSERVO) {
     sclosed[i] = int(EEPROM[i]);
     i=i+1;
   }
   j=0;
-  while (j < numservo) {
+  while (j < NUMSERVO) {
     sthrown[j] = int(EEPROM[i]);
     i=i+1;
     j=j+1;
@@ -57,10 +57,10 @@ void setup() {
   // then set to thrown (which first calls centerit which attaches then centers turnout)
   // then set to closed/normal
     
-  for (i = 0; i < numservo; i++)  {
+  for (i = 0; i < NUMSERVO; i++)  {
     scenter[i] = calc_center(sclosed[i], sthrown[i]);
    
-    if ( i < numservo ) {
+    if ( i < NUMSERVO ) {
       if ( rpins[i] != -30 ) {            // -30 is flag this servo does not have relay output
         pinMode(rpins[i], OUTPUT);
         digitalWrite(rpins[i], HIGH);
@@ -70,7 +70,7 @@ void setup() {
    
   //then set all servos to thrown
 
-  for (i = 0; i < numservo; i++)  {
+  for (i = 0; i < NUMSERVO; i++)  {
 
     Throw(i);                             // Set to thrown
     delay(200);
@@ -78,7 +78,7 @@ void setup() {
   }
   //then set all servos and relays to closed/normal
   state = 0x01;
-  for (i = 0; i < numservo; i++)  {
+  for (i = 0; i < NUMSERVO; i++)  {
     Close(i);                             // Set to closed/normal
     delay(300);
     if ( det[i] == 0 ) {
@@ -96,7 +96,6 @@ void setup() {
 
 
 void loop() {
-
     
     pb = readButtons(A6);
     pb_out = pb_vals[pb];
@@ -126,11 +125,11 @@ void loop() {
            // eepromcode goes here
            // write sclosed and sthrown to eeprom
            // adr 0 to adr numsevo =sclosed
-           // adr numservo+1 toadr numservo+numservo =sthrown
+           // adr NUMSERVO+1 toadr NUMSERVO+NUMSERVO =sthrown
            // update only writes if contents different than data
 
            i = 0;
-           while (i < numservo) {
+           while (i < NUMSERVO) {
              EEPROM.update(i, byte(sclosed[i]));
              Serial.print(i);
              Serial.print(" i sclosed[i] ");
@@ -138,7 +137,7 @@ void loop() {
              i=i+1;
            }
            j=0;
-           while (j < numservo) {
+           while (j < NUMSERVO) {
              EEPROM.update(i, byte(sthrown[j]));
              Serial.print(i);
              Serial.print(" j sthrown[j] ");
@@ -171,7 +170,7 @@ void loop() {
            break;  
          case 'S':                        // cmd S set turnouts closed or thrown upper case S
            state = 0x01;
-           for (i = 0; i < numservo; i++)  {
+           for (i = 0; i < NUMSERVO; i++)  {
           
              if ( ((arg & state) > 0) && (t_stat[i]!= 0) ) {            // t_stat=0 closed
                Serial.print("T");

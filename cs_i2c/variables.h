@@ -31,7 +31,7 @@ byte spending;
 int spins [ ] = {3, 5, 6, 9, 10, 11, 13, 12};      // Servo pins
 int rpins [ ] = {2, 4, 7, 8, A2, -30, A0, A1};   // relay output pins //-30 is flag this servo does not have relay output
 //A3 used for i2c int data avail
-byte t_stat[numservo];   //0 closed normal 1 thrown  2  init centered 3 request centered
+byte t_stat[NUMSERVO];   //0 closed normal 1 thrown  2  init centered 3 request centered
 int det [ ] = {0, 0, 0, 0, 0, 0, 0, 0, 0};  // if 0 detach after action, if 1 dont detach
 
-Servo turnout[numservo];  // create servo object to control a servo
+Servo turnout[NUMSERVO];  // create servo object to control a servo
